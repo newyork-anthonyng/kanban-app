@@ -3,10 +3,6 @@ import React from 'react';
 import uuid from 'uuid';
 import Notes from './Notes';
 
-const notes = [
-
-];
-
 export default class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -33,12 +29,20 @@ export default class App extends React.Component {
 		this.setState({notes: newNotes});
 	}
 
+	deleteNote = (id, e) => {
+		e.stopPropagation();
+
+		const newNotes = this.state.notes.filter(note => note.id !== id);
+
+		this.setState({notes: newNotes});
+	}
+
 	render() {
 		const {notes} = this.state;
 		return (
 			<div>
 				<button onClick={this.addNotes}>+</button>
-				<Notes notes={notes} />
+				<Notes notes={notes} onDelete={this.deleteNote} />
 			</div>
 		);
 	}
