@@ -37,12 +37,41 @@ export default class App extends React.Component {
 		this.setState({notes: newNotes});
 	}
 
+	activateNoteEdit = (id) => {
+		const newNotes = this.state.notes.map(note => {
+			if(note.id === id) {
+				note.editing = true;
+			}
+
+			return note;
+		});
+
+		this.setState({notes: newNotes});
+	}
+
+	editNote = (id, task) => {
+		const newNotes = this.state.notes.map(note => {
+			if(note.id === id) {
+				note.editing = false;
+				note.task = task;
+			}
+
+			return note;
+		});
+
+		this.setState({notes: newNotes});
+	}
+
 	render() {
 		const {notes} = this.state;
 		return (
 			<div>
 				<button onClick={this.addNotes}>+</button>
-				<Notes notes={notes} onDelete={this.deleteNote} />
+				<Notes
+					notes={notes}
+					onNoteClick={this.activateNoteEdit}
+					onEdit={this.editNote}
+					onDelete={this.deleteNote} />
 			</div>
 		);
 	}
