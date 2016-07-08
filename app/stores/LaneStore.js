@@ -14,6 +14,26 @@ export default class LaneStore {
 		});
 	}
 
+	update(updatedLane) {
+		const newLanes = this.lanes.map(lane => {
+			if(lane.id === updatedLane.id) {
+				return Object.assign({}, lane, updatedLane);
+			}
+
+			return lane;
+		});
+
+		this.setState({lanes: newLanes});
+	}
+
+	delete(id) {
+		const newLanes = this.lanes.filter(lane => {
+			return lane.id !== id;
+		});
+
+		this.setState({lanes: newLanes});
+	}
+
 	attachToLane({laneId, noteId}) {
 		const newLanes = this.lanes.map(lane => {
 			// remove the note from any existing lanes
